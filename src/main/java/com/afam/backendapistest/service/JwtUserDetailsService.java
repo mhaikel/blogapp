@@ -2,6 +2,10 @@ package com.afam.backendapistest.service;
 
 import java.util.ArrayList;
 
+import com.afam.backendapistest.dao.UsernameDao;
+import com.afam.backendapistest.model.UsernameDetailsModel;
+import com.afam.backendapistest.model.UsernameRequestModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,13 +15,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
+    @Autowired
+    UsernameDao usernameDao;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if ("afamsecretkey".equals(username)) {
-            return new User("afamsecretkey", "$2a$10$4oRwOssn0GfECfwBYYH3oO46SUjAAwLQCmEsTUe9r2PWItxAJNb8S",
-                    new ArrayList<>());
-        } else {
-            throw new UsernameNotFoundException("User not found with username: " + username);
+        UsernameRequestModel model = new UsernameRequestModel();
+        model.setUsername(username);
+        UsernameDetailsModel user = usernameDao.usernameResponse(model);
+        if(null != user){
+            return  new User(username, user.getPassword(),new ArrayList<>());
+        }else{
+            throw new UsernameNotFoundException("Invalid Credentials:: " + username);
         }
+
     }
 }
