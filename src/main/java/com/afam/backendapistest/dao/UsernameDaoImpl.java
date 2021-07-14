@@ -35,7 +35,7 @@ public class UsernameDaoImpl implements UsernameDao {
         try{
             connection = dataSource.getConnection();
 //            connection = cardOracleDataSource().getConnection();
-            String query = "{call JWT_USER.proc_enter_username(?,?,?,?)}";
+            String query = "{call BLOGUSER.proc_enter_username(?,?,?,?)}";
             callableStatement = connection.prepareCall(query);
 
             callableStatement.setString(1,usernameRequestModel.getUsername());
@@ -77,7 +77,7 @@ public class UsernameDaoImpl implements UsernameDao {
         return usernameDetailsModel;
     }
 
-   /*     public static DataSource cardOracleDataSource() {
+        public static DataSource cardOracleDataSource() {
         OracleDataSource ds = null;
         try {
             ds = new OracleDataSource();
@@ -90,11 +90,11 @@ public class UsernameDaoImpl implements UsernameDao {
         return ds;
     }
 
-    public static void main(String[] args) {
+ /*   public static void main(String[] args) {
         UsernameDaoImpl dao = new UsernameDaoImpl();
         UsernameRequestModel usernameRequestModel = new UsernameRequestModel();
-        usernameRequestModel.setUsername("afam22");
+        usernameRequestModel.setUsername("LEX");
         System.out.println("Response ::: " + dao.usernameResponse(usernameRequestModel));
-    }*/
-
+    }
+*/
 }

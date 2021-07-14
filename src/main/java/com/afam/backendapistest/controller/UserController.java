@@ -16,8 +16,8 @@ public class UserController {
     @Autowired
     UserDao userDao;
 
-    @PostMapping("/sign_up_user")
-    public ResponseEntity<GenericResponse> sign_up_user(@RequestBody User requestModel){
+    @PostMapping("/sign-up-user")
+    public ResponseEntity<GenericResponse> signUpUser(@RequestBody User requestModel){
         GenericResponse response = userDao.signUp(requestModel);
         return ResponseEntity.ok(response);
     }
