@@ -1,11 +1,9 @@
 package com.afam.backendapistest.model;
 
-import java.util.List;
-
-public class UsernameResponse {
+public class SignUpResponse {
     private String responseCode;
     private String responseMessage;
-    private List<UsernameDetailsModel> usernameDetailsModel;
+    private String token;
 
     public String getResponseCode() {
         return responseCode;
@@ -23,20 +21,20 @@ public class UsernameResponse {
         this.responseMessage = responseMessage;
     }
 
-    public List<UsernameDetailsModel> getUsernameDetailsModel() {
-        return usernameDetailsModel;
+    public String getToken() {
+        return token;
     }
 
-    public void setUsernameDetailsModel(List<UsernameDetailsModel> usernameDetailsModel) {
-        this.usernameDetailsModel = usernameDetailsModel;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override
     public String toString() {
-        return "UsernameResponse{" +
+        return "SignUpResponse{" +
                 "responseCode='" + responseCode + '\'' +
                 ", responseMessage='" + responseMessage + '\'' +
-                ", usernameDetailsModel=" + usernameDetailsModel +
+                ", token='" + token + '\'' +
                 '}';
     }
 }

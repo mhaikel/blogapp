@@ -1,13 +1,23 @@
 package com.afam.backendapistest.model;
 
+import com.afam.backendapistest.util.Token;
+
+
+import javax.validation.constraints.Email;
+import java.sql.ResultSet;
+
 public class User {
 
     private String username;
     private String password;
     private String firstName;
     private String lastName;
+
+    @Email(message = "Email must be valid")
     private String email;
-    //private boolean enable;
+
+    private String verificationCode;
+    private ResultSet enable;
 
 
     public String getUsername() {
@@ -50,14 +60,14 @@ public class User {
         this.email = email;
     }
 
-//
-//    public boolean isEnable() {
-//        return enable;
-//    }
-//
-//    public void setEnable(boolean enable) {
-//        this.enable = enable;
-//    }
+    public ResultSet getEnable() {
+        return enable;
+    }
+
+    public int setEnable(ResultSet enable) {
+        this.enable = enable;
+        return 0;
+    }
 
     @Override
     public String toString() {
@@ -69,5 +79,14 @@ public class User {
                 ", email='" + email + '\'' +
                 //", enable=" + enable +
                 '}';
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        Token token = null;
+        this.verificationCode = token.generateRandomString();
     }
 }

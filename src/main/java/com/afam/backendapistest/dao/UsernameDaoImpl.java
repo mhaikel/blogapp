@@ -2,7 +2,6 @@ package com.afam.backendapistest.dao;
 
 import com.afam.backendapistest.model.UsernameDetailsModel;
 import com.afam.backendapistest.model.UsernameRequestModel;
-import com.afam.backendapistest.model.UsernameResponse;
 import oracle.jdbc.OracleTypes;
 import oracle.jdbc.pool.OracleDataSource;
 import org.slf4j.Logger;
@@ -15,8 +14,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.List;
 
 @Repository
 public class UsernameDaoImpl implements UsernameDao {

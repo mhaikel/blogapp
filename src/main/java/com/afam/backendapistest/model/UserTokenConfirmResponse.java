@@ -1,9 +1,17 @@
 package com.afam.backendapistest.model;
 
-public class GenericResponse {
+public class UserTokenConfirmResponse {
+    private boolean isEnable;
     private String responseCode;
     private String responseMessage;
 
+    public boolean isEnable() {
+        return isEnable;
+    }
+
+    public void setEnable(boolean enable) {
+        isEnable = enable;
+    }
 
     public String getResponseCode() {
         return responseCode;
@@ -23,8 +31,9 @@ public class GenericResponse {
 
     @Override
     public String toString() {
-        return "GenericResponse{" +
-                "responseCode='" + responseCode + '\'' +
+        return "UserTokenConfirmResponse{" +
+                "isEnable=" + isEnable +
+                ", responseCode='" + responseCode + '\'' +
                 ", responseMessage='" + responseMessage + '\'' +
                 '}';
     }
