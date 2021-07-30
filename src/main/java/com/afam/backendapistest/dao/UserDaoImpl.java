@@ -1,11 +1,7 @@
 package com.afam.backendapistest.dao;
 
 
-import com.afam.backendapistest.controller.ViewConfirmationController;
-import com.afam.backendapistest.model.GenericResponse;
-import com.afam.backendapistest.model.SignUpResponse;
-import com.afam.backendapistest.model.User;
-import com.afam.backendapistest.model.UsernameDetailsModel;
+import com.afam.backendapistest.model.*;
 import com.afam.backendapistest.util.Token;
 import oracle.jdbc.OracleTypes;
 import oracle.jdbc.pool.OracleDataSource;
@@ -19,9 +15,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 @Repository
 public class UserDaoImpl implements UserDao{
@@ -236,8 +229,105 @@ public class UserDaoImpl implements UserDao{
 
     }
 
+    @Override
+    public GenericResponse userLogin(UserLoginRequestModel request) {
+        Connection connection = null;
+        CallableStatement callableStatement = null;
+        GenericResponse response = new GenericResponse();
 
- /*   public static DataSource cardOracleDataSource() {
+
+
+
+        try {
+            connection = dataSource.getConnection();
+            //connection = cardOracleDataSource().getConnection();
+            String query = "{call BLOGUSER.proc_login_user(?,?,?,?)}";
+            callableStatement = connection.prepareCall(query);
+            callableStatement.setString(1, request.getUsername());
+            callableStatement.setString(2, request.getPassword());
+            callableStatement.registerOutParameter(3, Types.VARCHAR);
+            callableStatement.registerOutParameter(4, Types.VARCHAR);
+            callableStatement.execute();
+
+            response.setResponseCode(callableStatement.getString(3));
+            response.setResponseMessage(callableStatement.getString(4));
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if (connection != null){
+                try {
+                    connection.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            if (callableStatement != null){
+                try {
+                    callableStatement.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return response;
+    }
+
+    @Override
+    public GenericResponse verifiedUsernameCheck(String username) {
+        Connection connection = null;
+        CallableStatement callableStatement = null;
+
+        GenericResponse response = new GenericResponse();
+
+
+        try {
+            connection = dataSource.getConnection();
+            //connection = cardOracleDataSource().getConnection();
+            String query = "{call BLOGUSER.proc_verif_flag_login_status(?,?,?)}";
+            callableStatement = connection.prepareCall(query);
+            callableStatement.setString(1, username);
+            callableStatement.registerOutParameter(2,Types.VARCHAR);
+            callableStatement.registerOutParameter(3, Types.VARCHAR);
+            callableStatement.execute();
+
+            response = new GenericResponse();
+            response.setResponseCode(callableStatement.getString(2));
+            response.setResponseMessage(callableStatement.getString(3));
+
+
+
+        }catch (Exception exception){
+            logger.error(exception.getMessage());
+            exception.printStackTrace();
+        }finally {
+            if (connection != null){
+                try {
+                    connection.close();
+                }catch (Exception exception){
+                    exception.printStackTrace();
+                }
+            }
+            if (callableStatement != null){
+                try {
+                    callableStatement.close();
+                }catch (Exception exception){
+                exception.printStackTrace();
+                }
+            }
+        }
+
+
+        return response;
+    }
+
+/*
+
+    public static DataSource cardOracleDataSource() {
         OracleDataSource ds = null;
         try {
             ds = new OracleDataSource();
@@ -253,20 +343,40 @@ public class UserDaoImpl implements UserDao{
 
 
     public static void main(String[] args) {
-*//*
 
-        // token confirmation test
+
+//        // token confirmation test
+//        UserDaoImpl dao = new UserDaoImpl();
+//        String token = dao.findByToken("trukkd");
+//        System.out.println("Response ::: " + token);
+
+
+
+//        // user enable flag test
+//        UserDaoImpl dao = new UserDaoImpl();
+//        GenericResponse enable = dao.updateEnableFlag("wbvqqfwgnf");
+//        System.out.println("Enable flag test ::::: " + enable);
+
+//        //login user test
+//        UserDaoImpl dao = new UserDaoImpl();
+//        UserLoginRequestModel request = new UserLoginRequestModel("gogogo","test");
+//        GenericResponse login = dao.userLogin(request);
+//        System.out.println("Response:::: " + login);
+
+//        // user enable flag test by username
+//        UserDaoImpl dao = new UserDaoImpl();
+//        UsernameRequestModel user = new UsernameRequestModel("gogogo00");
+//        GenericResponse enable = dao.checkEnableFlagByUsername(user);
+//        System.out.println("Enable flag test ::::: " + enable);
+
+
+        //  verified user enable flag test by username
         UserDaoImpl dao = new UserDaoImpl();
-        String token = dao.findByToken("trukkd");
-        System.out.println("Response ::: " + token);
-*//*
-
-
-        // user enable flag test
-        UserDaoImpl dao = new UserDaoImpl();
-        GenericResponse enable = dao.updateEnableFlag("wbvqqfwgnf");
+        GenericResponse enable = dao.verifiedUsernameCheck("ggg");
         System.out.println("Enable flag test ::::: " + enable);
 
-    }*/
+
+    }
+*/
 
 }

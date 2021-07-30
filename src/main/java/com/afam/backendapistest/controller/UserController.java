@@ -5,9 +5,11 @@ import com.afam.backendapistest.dao.UserDao;
 import com.afam.backendapistest.model.GenericResponse;
 import com.afam.backendapistest.model.SignUpResponse;
 import com.afam.backendapistest.model.User;
+import com.afam.backendapistest.model.UserLoginRequestModel;
 import com.afam.backendapistest.service.EmailService;
 import com.afam.backendapistest.util.Token;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     UserDao userDao;
-    User userModal;
 
     @Autowired
     Token token;
@@ -43,6 +44,26 @@ public class UserController {
 
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody UserLoginRequestModel userRequestDetails){
+       GenericResponse usernamePasswordResponse = userDao.userLogin(userRequestDetails);
+       GenericResponse usernameFlagCheckResponse = userDao.verifiedUsernameCheck(userRequestDetails.getUsername());
+
+       if (usernamePasswordResponse.getResponseCode().startsWith("99")){
+           return new ResponseEntity("Invalid User Credentials",HttpStatus.UNAUTHORIZED);
+       }else if (usernamePasswordResponse.getResponseCode().startsWith("00") &&
+                usernameFlagCheckResponse.getResponseCode().startsWith("99") ){
+           return new ResponseEntity("User not verified, please verify your account",HttpStatus.PRECONDITION_REQUIRED);
+       }else if (usernamePasswordResponse.getResponseCode().startsWith("00") &&
+                 usernameFlagCheckResponse.getResponseCode().startsWith("00")){
+           return new ResponseEntity("Login Successful",HttpStatus.OK);
+       }
+
+
+        return null;
+    }
+
 
 //    @GetMapping("/confirm-account")
 //    public String validateTokenLink(){

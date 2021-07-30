@@ -1,9 +1,7 @@
 package com.afam.backendapistest.dao;
 
 
-import com.afam.backendapistest.model.GenericResponse;
-import com.afam.backendapistest.model.SignUpResponse;
-import com.afam.backendapistest.model.User;
+import com.afam.backendapistest.model.*;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -18,5 +16,11 @@ public interface UserDao {
 
     //todo
     GenericResponse checkEnableFlag(String confirmationToken);
+
+    //todo
+    GenericResponse userLogin(UserLoginRequestModel request);
+
+    //todo
+    GenericResponse verifiedUsernameCheck(String username);
 
 }
