@@ -8,6 +8,7 @@ import oracle.jdbc.pool.OracleDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -22,6 +23,9 @@ public class UserDaoImpl implements UserDao{
 
     @Autowired
     DataSource dataSource;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -41,7 +45,7 @@ public class UserDaoImpl implements UserDao{
             String query = "{call BLOGUSER.proc_create_user(?,?,?,?,?,?,?,?)}";
             callableStatement = connection.prepareCall(query);
             callableStatement.setString(1,request.getUsername());
-            callableStatement.setString(2,request.getPassword());
+            callableStatement.setString(2,passwordEncoder.encode(request.getPassword()));
             callableStatement.setString(3,request.getFirstName());
             callableStatement.setString(4,request.getLastName());
             callableStatement.setString(5,request.getEmail());
