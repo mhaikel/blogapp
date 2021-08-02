@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsernameDao {
-    public UsernameDetailsModel usernameResponse(UsernameRequestModel usernameRequestModel);
+    public UsernameDetailsModel usernameResponse(String usernameRequestModel);
 }

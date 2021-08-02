@@ -23,7 +23,7 @@ public class UsernameDaoImpl implements UsernameDao {
 
     private final Logger logger = LoggerFactory.getLogger(UsernameDaoImpl.class);
     @Override
-    public UsernameDetailsModel usernameResponse(UsernameRequestModel usernameRequestModel) {
+    public UsernameDetailsModel usernameResponse(String usernameRequestModel) {
         Connection connection = null;
         CallableStatement callableStatement = null;
         ResultSet resultSet = null;
@@ -35,7 +35,7 @@ public class UsernameDaoImpl implements UsernameDao {
             String query = "{call BLOGUSER.proc_enter_username(?,?,?,?)}";
             callableStatement = connection.prepareCall(query);
 
-            callableStatement.setString(1,usernameRequestModel.getUsername());
+            callableStatement.setString(1,usernameRequestModel);
             callableStatement.registerOutParameter(2, Types.VARCHAR);
             callableStatement.registerOutParameter(3,Types.VARCHAR);
             callableStatement.registerOutParameter(4, OracleTypes.CURSOR);

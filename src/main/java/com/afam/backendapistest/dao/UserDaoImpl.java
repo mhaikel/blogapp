@@ -45,6 +45,7 @@ public class UserDaoImpl implements UserDao{
             String query = "{call BLOGUSER.proc_create_user(?,?,?,?,?,?,?,?)}";
             callableStatement = connection.prepareCall(query);
             callableStatement.setString(1,request.getUsername());
+            //callableStatement.setString(2,request.getPassword());  //without password encoder
             callableStatement.setString(2,passwordEncoder.encode(request.getPassword()));
             callableStatement.setString(3,request.getFirstName());
             callableStatement.setString(4,request.getLastName());
@@ -238,9 +239,6 @@ public class UserDaoImpl implements UserDao{
         Connection connection = null;
         CallableStatement callableStatement = null;
         GenericResponse response = new GenericResponse();
-
-
-
 
         try {
             connection = dataSource.getConnection();
