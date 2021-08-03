@@ -58,12 +58,18 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody UserLoginRequestModel userRequestDetails){
         UserLoginRequestModel userRequest = new UserLoginRequestModel();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        // the below picks up username and encoded password from the database
+        // and stores them in a variable has shown in the next two lines
         UsernameDetailsModel usernameEncodedPasswordResp = usernameDao.usernameResponse(userRequestDetails.getUsername());
         String encodedPassword = usernameEncodedPasswordResp.getPassword();
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String password = userRequestDetails.getPassword();
-        encoder.matches(password, encodedPassword);
+        //the below boolean expression checks if the encoded password from the database matches with the password
+        // passed in when logging in i.e from username login request pojo class when signing in...
+        boolean doesPasswordMatch = encoder.matches(userRequestDetails.getPassword(), encodedPassword);
+
+        logger.info("password match check ::: " + doesPasswordMatch);
 
         userRequest.setUsername(userRequestDetails.getUsername());
         userRequest.setPassword(encodedPassword);
@@ -73,19 +79,25 @@ public class UserController {
        GenericResponse usernamePasswordResponse = userDao.userLogin(userRequest);
        GenericResponse usernameFlagCheckResponse = userDao.verifiedUsernameCheck(userRequest.getUsername());
 
-       if (usernamePasswordResponse.getResponseCode().startsWith("99")){
-           return new ResponseEntity("Invalid User Credentials",HttpStatus.UNAUTHORIZED);
-       }else if (usernamePasswordResponse.getResponseCode().startsWith("00") &&
-                usernameFlagCheckResponse.getResponseCode().startsWith("99") ){
-           return new ResponseEntity("User not verified, please verify your account",HttpStatus.PRECONDITION_REQUIRED);
-       }else if (usernamePasswordResponse.getResponseCode().startsWith("00") &&
-                 usernameFlagCheckResponse.getResponseCode().startsWith("00")){
-           return new ResponseEntity("Login Successful",HttpStatus.OK);
-       }
+      if (doesPasswordMatch == true) {
+          if (usernamePasswordResponse.getResponseCode().startsWith("99")){
+              return new ResponseEntity("Invalid User Credentials",HttpStatus.UNAUTHORIZED);
+          }else if (usernamePasswordResponse.getResponseCode().startsWith("00") &&
+                  usernameFlagCheckResponse.getResponseCode().startsWith("99") ){
+              return new ResponseEntity("User not verified, please verify your account",HttpStatus.PRECONDITION_REQUIRED);
+          }else if (usernamePasswordResponse.getResponseCode().startsWith("00") &&
+                  usernameFlagCheckResponse.getResponseCode().startsWith("00")){
+              return new ResponseEntity("Login Successful",HttpStatus.OK);
+          }
 
-
-        return null;
+      }else {
+          return new ResponseEntity("Invalid User Credentials", HttpStatus.UNAUTHORIZED);
+      }
+      return new ResponseEntity("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+
+
 
 
 //    @GetMapping("/confirm-account")

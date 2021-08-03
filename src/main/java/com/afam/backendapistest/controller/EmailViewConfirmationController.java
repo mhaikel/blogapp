@@ -1,9 +1,7 @@
 package com.afam.backendapistest.controller;
 
 import com.afam.backendapistest.dao.UserDao;
-import com.afam.backendapistest.dao.UsernameDaoImpl;
 import com.afam.backendapistest.model.GenericResponse;
-import com.afam.backendapistest.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class ViewConfirmationController {
-    private final Logger logger = LoggerFactory.getLogger(ViewConfirmationController.class);
+public class EmailViewConfirmationController {
+    private final Logger logger = LoggerFactory.getLogger(EmailViewConfirmationController.class);
 
     @Autowired
     UserDao userDao;
