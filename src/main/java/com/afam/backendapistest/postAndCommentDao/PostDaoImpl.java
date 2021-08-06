@@ -1,11 +1,8 @@
-package com.afam.backendapistest.postDao;
+package com.afam.backendapistest.postAndCommentDao;
 
 
 import com.afam.backendapistest.model.GenericResponse;
-import com.afam.backendapistest.postModel.IDModel;
-import com.afam.backendapistest.postModel.PostModel;
-import com.afam.backendapistest.postModel.PostRequestModel;
-import com.afam.backendapistest.postModel.PostResponse;
+import com.afam.backendapistest.postModel.*;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -199,7 +196,7 @@ public class PostDaoImpl implements PostDao {
     }
 
     @Override
-    public PostResponse showPostsByUser(IDModel userRequestPostsSearch) {
+    public PostResponse showPostsByUser(UsernamePostRequest userRequestPostsSearch) {
         Connection connection = null;
         CallableStatement callableStatement = null;
         ResultSet resultSet = null;
