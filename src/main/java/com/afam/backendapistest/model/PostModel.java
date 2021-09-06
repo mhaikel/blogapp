@@ -1,10 +1,12 @@
-package com.afam.backendapistest.postModel;
+package com.afam.backendapistest.model;
 
 public class PostModel {
     private long id;
     private String username;
     private String postMessage;
     private String dateCreated;
+    private int likes;
+    private int dislikes;
 
     public long getId() {
         return id;
@@ -38,6 +40,22 @@ public class PostModel {
         this.dateCreated = dateCreated;
     }
 
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getDislikes() {
+        return dislikes;
+    }
+
+    public void setDislikes(int dislikes) {
+        this.dislikes = dislikes;
+    }
+
     @Override
     public String toString() {
         return "PostModel{" +
@@ -45,6 +63,8 @@ public class PostModel {
                 ", username='" + username + '\'' +
                 ", postMessage='" + postMessage + '\'' +
                 ", dateCreated='" + dateCreated + '\'' +
+                ", likes=" + likes +
+                ", dislikes=" + dislikes +
                 '}';
     }
 }

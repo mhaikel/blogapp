@@ -1,4 +1,4 @@
-package com.afam.backendapistest.postModel;
+package com.afam.backendapistest.model;
 
 import java.util.List;
 

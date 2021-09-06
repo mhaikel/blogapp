@@ -1,10 +1,6 @@
-package com.afam.backendapistest.postAndCommentDao;
+package com.afam.backendapistest.dao;
 
-import com.afam.backendapistest.model.GenericResponse;
-import com.afam.backendapistest.postModel.IDModel;
-import com.afam.backendapistest.postModel.PostRequestModel;
-import com.afam.backendapistest.postModel.PostResponse;
-import com.afam.backendapistest.postModel.UsernamePostRequest;
+import com.afam.backendapistest.model.*;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -19,5 +15,15 @@ public interface PostDao {
     PostResponse showPostsByUser(UsernamePostRequest userRequestPostsSearch);
 
     GenericResponse deletePostByID(IDModel idDeletePostRequest);
+
+    GenericResponse likePost(PostIDCommentRequest postId);
+
+    GenericResponse undoLikePost(PostIDCommentRequest postId);
+
+    GenericResponse dislikePost(PostIDCommentRequest postId);
+
+    GenericResponse undoDislikePost(PostIDCommentRequest postId);
+
+
 
 }

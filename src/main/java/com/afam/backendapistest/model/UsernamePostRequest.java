@@ -1,4 +1,4 @@
-package com.afam.backendapistest.postModel;
+package com.afam.backendapistest.model;
 
 public class UsernamePostRequest {
     private String username;

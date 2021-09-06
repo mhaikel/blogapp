@@ -1,14 +1,14 @@
 package com.afam.backendapistest.controller;
 
 
-import com.afam.backendapistest.model.GenericResponse;
-import com.afam.backendapistest.postModel.*;
-import com.afam.backendapistest.postAndCommentDao.PostDao;
+import com.afam.backendapistest.model.*;
+import com.afam.backendapistest.dao.PostDao;
 import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +22,8 @@ public class PostController {
 
     @Autowired
     PostDao postDao;
+
+
 
     @Value("${jwt.secret}")
     private String secret;
@@ -89,8 +91,29 @@ public class PostController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/like_post")
+    public ResponseEntity<GenericResponse> likePost(@RequestBody PostIDCommentRequest postId){
+        GenericResponse response = postDao.likePost(postId);
+        return ResponseEntity.ok(response);
+    }
 
+    @PostMapping("/dislike_post")
+    public ResponseEntity<GenericResponse> dislikePost(@RequestBody PostIDCommentRequest postId){
+        GenericResponse response = postDao.dislikePost(postId);
+        return ResponseEntity.ok(response);
+    }
 
+    @PostMapping("/undo_like_post")
+    public ResponseEntity<GenericResponse> undoLikePost(@RequestBody PostIDCommentRequest postId){
+        GenericResponse response = postDao.undoLikePost(postId);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/undo_dislike_post")
+    public ResponseEntity<GenericResponse> undoDislikePost(@RequestBody PostIDCommentRequest postId){
+        GenericResponse response = postDao.undoDislikePost(postId);
+        return ResponseEntity.ok(response);
+    }
 
 
 }
