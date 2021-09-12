@@ -41,15 +41,20 @@ public class UserController {
     public ResponseEntity<SignUpResponse> signUpUser(@RequestBody User requestModel){
         SignUpResponse  response = userDao.signUp(requestModel);
 
-        if (response.getResponseCode().startsWith("00")){
-            SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setTo(requestModel.getEmail());
-            mailMessage.setSubject("COMPLETE REGISTRATION!!!");
-            mailMessage.setText("To confirm your account, please click here : " + "http://localhost:7001/backendapistest/confirm-account/token?token=" + response.getToken());
+        try {
+            if (response.getResponseCode().startsWith("00")){
+                SimpleMailMessage mailMessage = new SimpleMailMessage();
+                mailMessage.setTo(requestModel.getEmail());
+                mailMessage.setSubject("COMPLETE REGISTRATION!!!");
+                mailMessage.setText("To confirm your account, please click here : " + "http://localhost:7001/backendapistest/confirm-account/token?token=" + response.getToken());
 
-            emailService.sendEmail(mailMessage);
+                emailService.sendEmail(mailMessage);
 
+            }
+        }catch (Exception e){
+            e.getMessage();
         }
+
 
 
         return ResponseEntity.ok(response);
